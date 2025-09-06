@@ -13,7 +13,7 @@ app = FastAPI(title="Titanic Survival Prediction API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # ou ["*"] pour tout autoriser
+    allow_origins=["http://localhost:3000"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -35,8 +35,7 @@ def root():
 
 @app.post("/predict")
 def predict(passenger: Passenger):
-    # Créer un DataFrame avec toutes les features dans le bon ordre
-    # L'ordre doit correspondre à celui utilisé lors de l'entraînement
+    
     input_data = pd.DataFrame({
         'Pclass': [passenger.Pclass],
         'Sex': [passenger.Sex],
@@ -49,7 +48,7 @@ def predict(passenger: Passenger):
     
     try:
         prediction = pipeline.predict(input_data)[0]
-        proba = pipeline.predict_proba(input_data)[0][1]  # Probabilité de survie
+        proba = pipeline.predict_proba(input_data)[0][1]  
         
         return {
             "prediction": int(prediction), 
